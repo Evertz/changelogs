@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package com.evertz.devtools.changelog;
+
+option java_package = "com.evertz.devtools.changelog";
+option java_outer_classname = "Types";
+
+message ParsedSource {
+    string file = 1;
+    int32 line = 2;
+    int32 offset = 3;
+}
+
+message ChangelogEntry {
+    string scope = 1;
+    string increment = 2;
+    string type = 3;
+    string ticket = 4;
+    string note = 5;
+
+    ParsedSource source = 6;
+}
+
+message ChangelogSection {
+    string scope = 1;
+    repeated ChangelogEntry entries = 2;
+}
+
+message ChangelogEntrySet {
+    string version = 1;
+    string base_version = 2;
+    string release = 3;
+    string component_name = 4;
+    string increment = 5;
+    string owner = 6;
+    string owner_email = 7;
+
+    ChangelogSection breaking_changes = 8;
+    ChangelogSection config_changes = 9;
+
+    repeated ChangelogSection sections = 10;
+}
+
+message Changelog {
+    repeated ChangelogEntrySet logs = 1;
+}
+
+message ChangelogDiagnostic {
+    string message = 1;
+
+    enum Category {
+        INFO = 0;
+        WARN = 1;
+        ERROR = 2;
+    }
+
+    Category category = 2;
+
+    bool isError = 3;
+}
+
+message ChangelogValidationResult {
+    ChangelogEntry log = 1;
+    bool hasErrors = 2;
+    repeated ChangelogDiagnostic diagnostics = 3;
+}
+
+message ChangelogCompileResult {
+    ChangelogEntrySet logs = 1;
+    repeated ChangelogValidationResult validationResult = 2;
+}

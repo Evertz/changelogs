@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package com.evertz.devtools.changelog;
+
+option java_package = "com.evertz.devtools.changelog";
+option java_outer_classname = "Flags";
+
+message CompilerFlags {
+
+}
+
+message EmitterFlags {
+
+    /**
+     * The base URL to apply to ticket links
+     */
+    string ticketBaseUrl = 1;
+
+    /**
+     * If applicable, emit the legend associated with this changelog
+     */
+    bool emitLegend = 2;
+
+    /**
+     * The name of the project to stamp on changelogs
+     * Note that not all emitters observe this value
+     */
+    string project = 3;
+
+    /**
+     * The name of the owner of this package to stamp on certain changelog formats
+     */
+    string owner = 4;
+
+    /**
+     * The email of the owner of this package to stamp on certain changelog formats
+     */
+    string owner_email = 5;
+}
+
+message ValidatorFlags {
+
+    /**
+     * If the validator should allow blank / missing change tickets
+     * Defaults true
+     */
+    bool allowBlankTicket = 1;
+
+    /**
+     * A set of allowed scopes, eg: Ingest, Playout...
+     */
+    repeated string scopes = 2;
+
+    /**
+     * A set of allowed change types, eg: fix, feat, build...
+     */
+    repeated string types = 3;
+
+    /**
+     * A subset of allowed increments, eg only allow patch and minor increments
+     * Defaults empty, allowing all increments
+     */
+    repeated string increments = 4;
+}
+
+message Configuration {
+    /**
+     * The name given to this configuration set
+     */
+    string name = 1;
+
+    CompilerFlags compilerFlags = 2;
+
+    EmitterFlags emitterFlags = 3;
+
+    ValidatorFlags validatorFlags = 4;
+}
+
+message Configurations {
+    map<string, Configuration> configurations = 1;
+}
