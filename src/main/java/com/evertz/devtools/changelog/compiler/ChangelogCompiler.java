@@ -30,7 +30,8 @@ public final class ChangelogCompiler {
                                         String baseVersion,
                                         String componentName,
                                         String owner,
-                                        String ownerEmail) {
+                                        String ownerEmail,
+                                        boolean isNoAutoVersionIncrement) {
     ImmutableList<ChangelogEntry> entries = parser.parse(paths);
     ImmutableList<ChangelogValidationResult> changelogValidationResults = validator.validate(entries);
 
@@ -63,12 +64,14 @@ public final class ChangelogCompiler {
         .sorted(Comparator.comparing(ChangelogSection::getScope))
         .collect(Collectors.toList());
 
+    String version = isNoAutoVersionIncrement ? baseVersion : incrementVersion(baseVersion, increment).toString();
+
     ChangelogEntrySet.Builder entrySetBuilder = ChangelogEntrySet.newBuilder()
         .setRelease(releaseDateTime.toString())
         .setBaseVersion(baseVersion)
-        .setVersion(incrementVersion(baseVersion, increment).toString())
+        .setVersion(version)
         .setComponentName(componentName)
-        .setIncrement(increment)
+        .setIncrement(isNoAutoVersionIncrement ? "" : increment)
         .setOwner(owner)
         .setOwnerEmail(ownerEmail)
         .addAllSections(sections);

@@ -1,3 +1,5 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
 java_proto_library(
     name = "changelog_proto_java",
     deps = ["//proto:changelog_proto"],
@@ -30,11 +32,11 @@ java_library(
 
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
 
-        "//3rdparty/jvm/com/vladsch/flexmark",
-        "//3rdparty/jvm/com/vladsch/flexmark:flexmark_util",
-        "//3rdparty/jvm/org/projectlombok:lombok",
-        "//3rdparty/jvm/com/google/guava",
-        "//3rdparty/jvm/com/github/zafarkhaja:java_semver",
+        artifact("com.vladsch.flexmark:flexmark"),
+        artifact("com.vladsch.flexmark:flexmark-util"),
+        artifact("org.projectlombok:lombok"),
+        artifact("com.google.guava:guava"),
+        artifact("com.github.zafarkhaja:java-semver"),
     ],
     visibility = ["//visibility:public"]
 )

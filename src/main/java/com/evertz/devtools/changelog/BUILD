@@ -1,3 +1,5 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
 java_proto_library(
     name = "changelog_proto_java",
     deps = ["//proto:changelog_proto"],
@@ -15,7 +17,7 @@ java_library(
         ":flags_proto_java",
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
         "@com_google_protobuf//:protobuf_java",
-        "//3rdparty/jvm/com/google/guava",
+        artifact("com.google.guava:guava"),
     ]
 )
 
@@ -32,10 +34,10 @@ java_library(
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
 
         "@com_google_protobuf//:protobuf_java",
-        "//3rdparty/jvm/com/github/zafarkhaja:java_semver",
-        "//3rdparty/jvm/net/sourceforge/argparse4j",
-        "//3rdparty/jvm/org/projectlombok:lombok",
-        "//3rdparty/jvm/com/google/guava",
+        artifact("com.github.zafarkhaja:java-semver"),
+        artifact("net.sourceforge.argparse4j:argparse4j"),
+        artifact("org.projectlombok:lombok"),
+        artifact("com.google.guava:guava"),
     ],
     plugins = [
         "//:lombok"

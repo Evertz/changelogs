@@ -1,3 +1,5 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
 proto_library(
     name = "changelog_proto",
     srcs = ["changelog.proto"],

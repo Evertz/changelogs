@@ -1,3 +1,6 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
+
 java_binary(
     name = "changelog",
     runtime_deps = [
@@ -14,9 +17,10 @@ java_plugin(
     name = "lombok",
     processor_class = "lombok.launch.AnnotationProcessorHider$AnnotationProcessor",
     deps = [
-        "//3rdparty/jvm/org/projectlombok:lombok",
+        artifact("org.projectlombok:lombok"),
     ],
     generates_api = 1,
     visibility = ["//visibility:public"]
 )
+
 

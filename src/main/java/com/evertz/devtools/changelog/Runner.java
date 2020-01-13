@@ -7,6 +7,7 @@ import com.evertz.devtools.changelog.emitters.*;
 import com.evertz.devtools.changelog.platformhost.LocalPlatformHost;
 import com.evertz.devtools.changelog.platformhost.PlatformHost;
 import com.github.zafarkhaja.semver.Version;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.TextFormat;
 import lombok.Builder;
@@ -65,15 +66,29 @@ public class Runner {
         .map(File::getAbsolutePath)
         .collect(Collectors.toSet());
 
+    String version = null;
+    try {
+      Path path = args.get("version_file");
+      version = platformHost.getFileContent(path.toString()).trim();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    if (Strings.isNullOrEmpty(version)) {
+      System.err.println("Unable to determine version info from version_file");
+      System.exit(1);
+    }
+
     ChangelogCompiler compiler = getChangelogCompiler();
 
     Types.ChangelogCompileResult result = compiler.compile(
         ImmutableSet.copyOf(files),
         args.get("date"),
-        args.get("version"),
+        version,
         configuration.getEmitterFlags().getProject(),
         configuration.getEmitterFlags().getOwner(),
-        configuration.getEmitterFlags().getOwnerEmail()
+        configuration.getEmitterFlags().getOwnerEmail(),
+        args.getBoolean("no_version_increment")
     );
 
     if (!args.getBoolean("skip_validation")) {

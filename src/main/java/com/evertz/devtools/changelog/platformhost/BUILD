@@ -1,8 +1,10 @@
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
 java_library(
     name = "platformhost",
     srcs = glob(["*.java"]),
     deps = [
-        "//3rdparty/jvm/com/google/guava",
+        artifact("com.google.guava:guava"),
     ],
     visibility = ["//visibility:public"]
 )

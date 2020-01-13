@@ -31,9 +31,6 @@ final class ArgParsers {
         .addParser("compile")
         .help("Compiles a set of changelog entries into a single changelog file");
 
-    subparser.addArgument("version")
-        .help("base version to base this changelog, ie: the version the resulting increment is applied to");
-
     subparser.addArgument("srcs")
         .nargs("+")
         .type(Arguments.fileType())
@@ -98,6 +95,10 @@ final class ArgParsers {
         .setDefault(Paths.get(System.getProperty("user.dir"), "changelog.conf"))
         .help("optional override for the configuration file, defaults to 'changelog.conf' in the current working directory");
 
+    subparser.addArgument("--version_file")
+        .type((parser, arg, value) -> Paths.get(value))
+        .help("optional version file from which to read a version number, formatted x.x.x");
+
     subparser.addArgument("--conf_name")
         .setDefault("default")
         .help("name of the configuration set to use");
@@ -137,11 +138,6 @@ final class ArgParsers {
         .action(Arguments.storeTrue())
         .setDefault(false)
         .help("emits the changelog to stdout");
-
-    group.addArgument("--emit-to-remote-haystack-host")
-        .metavar("host:port")
-        .help("the remote haystack server to emit the changelog to, " +
-            "expects a component matching this project name and version to already exist");
   }
 
   private static void addOverrideArgs(Subparser subparser) {
