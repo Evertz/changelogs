@@ -109,11 +109,11 @@ public class Runner {
 
     if (proto != null && !proto.isEmpty()) {
       try {
-        Types.ChangelogEntrySet.Builder entrySetBuilder = Types.ChangelogEntrySet.newBuilder();
-        TextFormat.merge(proto, entrySetBuilder);
-        Types.ChangelogEntrySet entrySet = entrySetBuilder.build();
+        Types.Changelog.Builder changelogBuilder = Types.Changelog.newBuilder();
+        TextFormat.merge(proto, changelogBuilder);
+        Types.Changelog changelog = changelogBuilder.build();
 
-        emitChangelogOrEntrySet(null, entrySet);
+        emitChangelogOrEntrySet(changelog, null);
       } catch (TextFormat.ParseException e) {
         e.printStackTrace();
         System.exit(1);
