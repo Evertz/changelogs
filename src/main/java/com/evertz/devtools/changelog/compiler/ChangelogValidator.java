@@ -55,7 +55,7 @@ public final class ChangelogValidator {
     ChangelogDiagnostic incrementDiagnostic = validateIncrement(entry);
     addDiagnosticAndSetFlags(incrementDiagnostic, diagnosticsBuilder, validationBuilder);
 
-    ChangelogDiagnostic ticketDiagnostic = validateTicket(entry);
+    ChangelogDiagnostic ticketDiagnostic = validateTickets(entry);
     addDiagnosticAndSetFlags(ticketDiagnostic, diagnosticsBuilder, validationBuilder);
 
     ChangelogDiagnostic noteDiagnostic = validateNote(entry);
@@ -125,9 +125,9 @@ public final class ChangelogValidator {
     return reportDiagnostic(formattedMessage, ChangelogDiagnostic.Category.ERROR);
   }
 
-  private ChangelogDiagnostic validateTicket(ChangelogEntry entry) {
+  private ChangelogDiagnostic validateTickets(ChangelogEntry entry) {
     if (flags.getAllowBlankTicket()) { return null; }
-    if (!Strings.isNullOrEmpty(entry.getTicket()) || flags.getAllowBlankTicket()) { return null; }
+    if (entry.getTicketsCount() != 0 || !Strings.isNullOrEmpty(entry.getTicket())) { return null; }
 
     String formattedMessage = String.format(
         "Changelog entry on line %d in '%s' is missing a ticket reference",

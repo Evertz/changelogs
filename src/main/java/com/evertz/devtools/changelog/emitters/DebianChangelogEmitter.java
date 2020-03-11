@@ -4,6 +4,7 @@ import com.evertz.devtools.changelog.Flags.EmitterFlags;
 import com.evertz.devtools.changelog.Types.Changelog;
 import com.evertz.devtools.changelog.Types.ChangelogEntry;
 import com.evertz.devtools.changelog.Types.ChangelogEntrySet;
+import com.google.common.base.Joiner;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -63,6 +64,9 @@ public class DebianChangelogEmitter extends ChangelogEmitter {
     if (!entry.getTicket().isEmpty()) {
       builder.append(" Closes: ");
       builder.append(entry.getTicket());
+    } else if (entry.getTicketsCount() > 0) {
+      builder.append(" Closes: ");
+      builder.append(Joiner.on(", ").join(entry.getTicketsList()));
     }
   }
 

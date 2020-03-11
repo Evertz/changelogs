@@ -50,6 +50,11 @@ public class MarkdownChangelogEmitter extends ChangelogEmitter {
     if (!entry.getTicket().isEmpty()) {
       String ticket = String.format("[%s](%s%s) ", entry.getTicket(), flags.getTicketBaseUrl(), entry.getTicket());
       builder.append(ticket);
+    } else if (entry.getTicketsCount() > 0) {
+      entry.getTicketsList().forEach(ticket -> {
+        String ticketWithLink = String.format("[%s](%s%s) ", ticket, flags.getTicketBaseUrl(), ticket);
+        builder.append(ticketWithLink);
+      });
     }
 
     // note

@@ -52,6 +52,11 @@ public class HtmlChangelogEmitter extends ChangelogEmitter {
     if (!entry.getTicket().isEmpty()) {
       String ticket = String.format("<a href=\"%s%s\">%s</a> ", flags.getTicketBaseUrl(), entry.getTicket(), entry.getTicket());
       builder.append(ticket);
+    } else if (entry.getTicketsCount() > 0) {
+      entry.getTicketsList().forEach(ticket -> {
+        String ticketWithLink = String.format("<a href=\"%s%s\">%s</a> ", flags.getTicketBaseUrl(), ticket, ticket);
+        builder.append(ticketWithLink);
+      });
     }
 
     // note

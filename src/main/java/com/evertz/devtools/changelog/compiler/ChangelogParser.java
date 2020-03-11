@@ -136,22 +136,42 @@ public final class ChangelogParser {
 
       builder.setType(type.getText().trim().unescape());
 
-      Link ticket = (Link) type.getNextAny(Link.class);
-      visitTicket(ticket, builder);
+      maybeVisitTickets(type, builder);
+    }
 
-      if (ticket == null) {
-        Text note = (Text) type.getNextAny(Text.class);
-        visitNote(note, builder);
+    private void maybeVisitTickets(Node node, ChangelogEntry.Builder builder) {
+      if (node == null) { return; }
+
+      // move forward until we hit start start of the note, this is marked by ':'
+      Node maybeNoteStart = node;
+      boolean isNoteStart = maybeNoteStart.getChars().startsWith(":");
+
+      while (!isNoteStart) {
+        maybeNoteStart  = maybeNoteStart.getNextAny(Text.class);
+
+        // reached the end and no : was found, we can't determine where the note starts
+        if (maybeNoteStart == null) {
+          throw new RuntimeException("Attempted to find start of Changelog notes, but failed. Is the note missing a ':'?");
+        }
+
+        isNoteStart = maybeNoteStart.getChars().startsWith(":");
       }
+
+      // we now have the start of the note, look back and find the links
+      // this prevents us finding links within the note itself
+      Link ticket = (Link) maybeNoteStart.getPreviousAny(Link.class);
+      while (ticket != null) {
+        visitTicket(ticket, builder);
+        ticket = (Link) ticket.getPreviousAny(Link.class);
+      }
+
+      // we have the start of the note in maybeNoteStart, consume this, nom nom nom
+      visitNote((Text) maybeNoteStart, builder);
     }
 
     private void visitTicket(Link ticket, ChangelogEntry.Builder builder) {
       if (ticket == null) { return; }
-
-      builder.setTicket(ticket.getText().trim().unescape());
-
-      Text note = (Text) ticket.getNextAny(Text.class);
-      visitNote(note, builder);
+      builder.addTickets(ticket.getText().trim().unescape());
     }
 
     private void visitNote(Text note, ChangelogEntry.Builder builder) {

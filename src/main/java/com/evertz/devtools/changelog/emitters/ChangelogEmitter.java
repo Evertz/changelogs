@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class ChangelogEmitter {
   static final String NEW_LINE = "\n";
@@ -108,6 +109,6 @@ public abstract class ChangelogEmitter {
 
   String formatHumanReadableDate(String date) {
     return ZonedDateTime.parse(date)
-        .format(DateTimeFormatter.ofPattern("E d MMM uuuu"));
+        .format(DateTimeFormatter.ofPattern("E d MMM uuuu", Locale.US));
   }
 }

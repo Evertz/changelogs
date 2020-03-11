@@ -15,7 +15,10 @@ message ChangelogEntry {
     string scope = 1;
     string increment = 2;
     string type = 3;
-    string ticket = 4;
+
+    string ticket = 4 [deprecated = true];
+    repeated string tickets = 7;
+
     string note = 5;
 
     ParsedSource source = 6;
