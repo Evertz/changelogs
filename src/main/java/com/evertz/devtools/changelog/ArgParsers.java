@@ -134,6 +134,11 @@ final class ArgParsers {
         .type(Arguments.fileType())
         .help("emit proto file to the given path");
 
+    group.addArgument("--json")
+        .metavar("path")
+        .type(Arguments.fileType())
+        .help("emit json file to the given path");
+
     group.addArgument("--emmit-to-stdout")
         .action(Arguments.storeTrue())
         .setDefault(false)

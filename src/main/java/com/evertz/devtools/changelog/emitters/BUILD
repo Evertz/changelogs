@@ -20,6 +20,7 @@ java_library(
         artifact("com.google.guava:guava"),
         artifact("org.projectlombok:lombok"),
         "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//:protobuf_java_util",
     ],
     plugins = [
         "//:lombok",

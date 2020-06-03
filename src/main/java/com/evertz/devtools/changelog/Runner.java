@@ -167,6 +167,17 @@ public class Runner {
           emitToStdout
       );
     }
+
+    if (args.get("json") != null) {
+      File file = args.get("json");
+      emitChangelog(
+          new JsonChangelogEmitter(configuration.getEmitterFlags()),
+          changelog,
+          entrySet,
+          file.toPath(),
+          emitToStdout
+      );
+    }
   }
 
   private void emitChangelog(ChangelogEmitter emitter, Types.Changelog changelog, Types.ChangelogEntrySet entrySet,
