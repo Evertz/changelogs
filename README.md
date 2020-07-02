@@ -17,7 +17,7 @@ The compiler accepts incoming changelog entries as markdown files, with a semi-s
 Ideally, each changelog entry should be contained within its own file, but this isn't strictly necessary
 or enforced.
 
-Below is an example of a changelog input, the files name or location is irrelevant
+Below is an example of a changelog input, the file's name and location is irrelevant
 
 ```
 ### SCOPE
