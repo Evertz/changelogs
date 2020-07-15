@@ -30,11 +30,17 @@ public final class ChangelogParser {
     parser = Parser.builder().build();
   }
 
-  public ImmutableList<ChangelogEntry> parse(@NonNull ImmutableSet<String> paths) {
+  public ImmutableList<ChangelogEntry> parse(@NonNull ImmutableSet<String> paths, String relativeToDir) {
     List<ChangelogEntry> entryList = paths
         .stream()
         .map(path -> {
           String content = host.getFileContent(path);
+          String[] absolute_path_split = path.split(relativeToDir, 2);
+          if (absolute_path_split.length == 2) {
+            path = absolute_path_split[1];
+            } else if (absolute_path_split.length == 1) {
+                throw new IllegalArgumentException("The directory \"" + relativeToDir +  "\" passed via the \"relativeToDir\" command line option is not in the absolute path to the source markdown file: \"" + path + "\"");
+            }
           return parseString(content, path);
         })
         .flatMap(List::stream)

@@ -34,23 +34,32 @@ final class ArgParsers {
     subparser.addArgument("srcs")
         .nargs("+")
         .type(Arguments.fileType())
-        .help("list of source markdown files to compile");
+        .help("List of source markdown files to compile");
 
     subparser.addArgument("--date")
         .metavar("iso")
         .type((parser, argument, value) -> ZonedDateTime.parse(value))
         .setDefault(ZonedDateTime.now())
-        .help("optional override for the release date, formatted as ISO8601");
+        .help("Optional override for the release date, formatted as ISO8601");
 
     subparser.addArgument("--skip-validation")
         .action(Arguments.storeTrue())
         .setDefault(false)
-        .help("skips the validation stage of the changelog generation");
+        .help("Skips the validation stage of the changelog generation");
 
     subparser.addArgument("--no-version-increment")
         .action(Arguments.storeTrue())
         .setDefault(false)
-        .help("don't increment the version automatically, use version as final");
+        .help("Don't increment the version automatically, use version as final");
+
+    String cwd_path = System.getProperty("user.dir");
+    String[] cwd_path_split = cwd_path.split("/");
+    String cwdName = cwd_path_split[cwd_path_split.length-1];
+
+    subparser.addArgument("--relative-to-dir")
+            .metavar("RELATIVE_TO_DIR")
+            .setDefault(cwdName)
+            .help("Optional directory against which to create a relative file path to the source markdown files. The resulting relative file path is stored in the output changelog protobuf file only. For consistency, pass the name of the top-level git-repo.");
 
     addEmitArgs(subparser);
     addCommonArgs(subparser);

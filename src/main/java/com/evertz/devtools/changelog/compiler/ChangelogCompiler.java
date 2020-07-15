@@ -28,11 +28,12 @@ public final class ChangelogCompiler {
   public ChangelogCompileResult compile(ImmutableSet<String> paths,
                                         ZonedDateTime releaseDateTime,
                                         String baseVersion,
+                                        String relativeToDir,
                                         String componentName,
                                         String owner,
                                         String ownerEmail,
                                         boolean isNoAutoVersionIncrement) {
-    ImmutableList<ChangelogEntry> entries = parser.parse(paths);
+    ImmutableList<ChangelogEntry> entries = parser.parse(paths, relativeToDir);
     ImmutableList<ChangelogValidationResult> changelogValidationResults = validator.validate(entries);
 
     // build up a section based off the list of entries

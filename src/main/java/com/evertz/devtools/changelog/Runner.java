@@ -85,6 +85,7 @@ public class Runner {
         ImmutableSet.copyOf(files),
         args.get("date"),
         version,
+        args.get("relative_to_dir"),
         configuration.getEmitterFlags().getProject(),
         configuration.getEmitterFlags().getOwner(),
         configuration.getEmitterFlags().getOwnerEmail(),
