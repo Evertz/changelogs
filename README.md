@@ -108,3 +108,6 @@ the list of files be passed to the compiler as a args file, for example `java -j
 each line is treated as an arg.
 
 
+
+#### Notice 
+This is a version the internal Changelog Compiler used at Evertz, this is not a product of Evertz and not officially supported
