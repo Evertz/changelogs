@@ -18,29 +18,31 @@ java_library(
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
         "@com_google_protobuf//:protobuf_java",
         artifact("com.google.guava:guava"),
-    ]
+    ],
 )
 
 java_library(
     name = "changelog",
-    srcs = ["Main.java", "ArgParsers.java", "Runner.java"],
+    srcs = [
+        "ArgParsers.java",
+        "Main.java",
+        "Runner.java",
+    ],
+    plugins = [
+        "//:lombok",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
+        ":changelog_configuration",
         ":changelog_proto_java",
         ":flags_proto_java",
-        ":changelog_configuration",
-
         "//src/main/java/com/evertz/devtools/changelog/compiler",
         "//src/main/java/com/evertz/devtools/changelog/emitters",
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
-
         "@com_google_protobuf//:protobuf_java",
         artifact("com.github.zafarkhaja:java-semver"),
         artifact("net.sourceforge.argparse4j:argparse4j"),
         artifact("org.projectlombok:lombok"),
         artifact("com.google.guava:guava"),
     ],
-    plugins = [
-        "//:lombok"
-    ],
-    visibility = ["//visibility:public"]
 )

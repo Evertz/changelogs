@@ -20,23 +20,21 @@ java_library(
     srcs = [
         "ChangelogCompiler.java",
         "ChangelogParser.java",
-        "ChangelogValidator.java"
+        "ChangelogValidator.java",
     ],
     plugins = [
         "//:lombok",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":changelog_proto_java",
         ":flags_proto_java",
         ":scopes",
-
         "//src/main/java/com/evertz/devtools/changelog/platformhost",
-
         artifact("com.vladsch.flexmark:flexmark"),
         artifact("com.vladsch.flexmark:flexmark-util"),
         artifact("org.projectlombok:lombok"),
         artifact("com.google.guava:guava"),
         artifact("com.github.zafarkhaja:java-semver"),
     ],
-    visibility = ["//visibility:public"]
 )

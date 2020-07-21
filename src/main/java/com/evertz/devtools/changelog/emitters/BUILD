@@ -13,17 +13,16 @@ java_proto_library(
 java_library(
     name = "emitters",
     srcs = glob(["*.java"]),
+    plugins = [
+        "//:lombok",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":changelog_proto_java",
         ":flags_proto_java",
-
         artifact("com.google.guava:guava"),
         artifact("org.projectlombok:lombok"),
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",
     ],
-    plugins = [
-        "//:lombok",
-    ],
-    visibility = ["//visibility:public"]
 )
