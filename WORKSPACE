@@ -1,26 +1,27 @@
 workspace(name = "changelog")
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 skylib_version = "0.8.0"
+
 http_archive(
     name = "bazel_skylib",
+    sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
     type = "tar.gz",
     url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib.{}.tar.gz".format(skylib_version, skylib_version),
-    sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
 )
 
 git_repository(
     name = "com_google_protobuf",
-    remote = "https://github.com/protocolbuffers/protobuf.git",
     commit = "3e1bd5b81e6d3d806c8b7e1282face57ef7bb0be",
+    remote = "https://github.com/protocolbuffers/protobuf.git",
 )
 
 http_archive(
     name = "rules_jvm_external",
-    strip_prefix = "rules_jvm_external-2.9",
     sha256 = "e5b97a31a3e8feed91636f42e19b11c49487b85e5de2f387c999ea14d77c7f45",
+    strip_prefix = "rules_jvm_external-2.9",
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/2.9.zip",
 )
 
@@ -42,6 +43,6 @@ maven_install(
     ],
     repositories = [
         "https://jcenter.bintray.com/",
-        "https://repo.maven.apache.org/maven2"
+        "https://repo.maven.apache.org/maven2",
     ],
 )

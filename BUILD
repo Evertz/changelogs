@@ -1,6 +1,3 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_plugin")
-load("@rules_jvm_external//:defs.bzl", "artifact")
-
 
 
 java_binary(
